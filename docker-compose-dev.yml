@@ -1,0 +1,19 @@
+version: "3" # version of docker-compose
+services: # services mean '~containers'
+  web: # service name
+    build: # by conventino build it using Dockerfile in the same dir
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000" # map port 3000 outside of container to 3000 inside of container
+    volumes:
+      - /app/node_modules
+      - .:/app
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm", "run", "test"]
